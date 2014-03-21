@@ -23,13 +23,13 @@ Also please use wiki pages for detailed descriptions of some features (link will
 >
 >If you don't want to compile your rootfs, try ArchLinux. If you are familiar with OpenEmbedded look at Yocto and Angstrom. If you like Kconfig try Buildroot.
 
-- #### [Yocto](https://www.yoctoproject.org/)
+#### [Yocto](https://www.yoctoproject.org/)
 
-- #### [Ångström](http://www.angstrom-distribution.org/)
-    Page is under construction (20.3.2014)
+#### [Ångström](http://www.angstrom-distribution.org/)
+  Page is under construction (20.3.2014)
 
-- #### [Buildroot](http://buildroot.uclibc.org/)
-    For directions about Buildroot see it's [wiki page](https://github.com/AndrejD/notes-on-embedded-linux/wiki/Buildroot)
+#### [Buildroot](http://buildroot.uclibc.org/)
+  For directions about Buildroot see it's [wiki page](https://github.com/AndrejD/notes-on-embedded-linux/wiki/Buildroot)
 
 
 
