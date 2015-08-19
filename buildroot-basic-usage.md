@@ -34,6 +34,8 @@ And finally, you can create Linux images by executing
 
 This will effectively take settings in `.config` file and start build process of downloading source files, compiling them and at the end generating images which can be uploaded to NAND flash on Linux board.
 
+>To use buildroot provided example configurations, you would first run `$ make xyz_defconfig` which will copy settings for >selected board to buildroot's `.config` file under buildroot root directory and afterward you would run `make menuconfig` to >edit new configuration.
+
 ---
 
 ### Typical daily work flow
