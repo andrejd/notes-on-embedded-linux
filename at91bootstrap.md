@@ -35,7 +35,7 @@ make menuconfig
 make savedefconfig
 
 # copy new configuration to board folder for later use
-cp defconfig /board/sama5d3_acqua/acqua-256m-nandflash_defconfig
+cp defconfig ./board/sama5d3_acqua/acqua-256m-nandflash_defconfig
 ```
 Here are the contents of used configuration for loading u-boot from NAND to RAM address 0x26f00000
 
