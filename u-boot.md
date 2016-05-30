@@ -90,3 +90,19 @@ To enable watchdog for Acme Acqua SoM, one has to modify file `acqua.h` file in 
 > With Watchdog enabled and SPL option checked in U-Boot configuration compilation of SPL bootloader will fail.  As we do not need SPL, we can disable it in U-Boot settings.
 
 >*"The point with an SPL is to create a very small preloader, which loads the 'full' U-Boot image. It’s built from U-Boot’s sources, but with a minimal set of code. So when U-Boot is built for a platform that requires SPL, it’s typically done twice: Once for generating the SPL, and a second time for the full U-Boot. The SPL build is done with the CONFIG\_SPL defined. Only the pre-location phase runs on SPL builds. All it does is the minimal set of initializations, then loads the full U-Boot image, and passes control to it."*
+
+### Flashing linux images with U-Boot
+
+You can use U-Boot to flash network images of e.g. new kernel and fs to onboard flash memory. To do that, U-Boot has to be configured with `CONFIG_NET=y` option and network environmental variables has to ve set. Here is part of actual U-Boot environment where all needed variables are set (`ipaddr`, `netmask`, `serverip`). Then you need running tftp server on address defined with `ipaddr`. `upadateXY` are helper variables which can be executed by `run updateXY`. You can execute `run updatefs` to download new file system image from server and flash it on the board.
+
+```bash
+ipaddr=192.168.1.96
+netmask=255.255.255.0
+serverip=192.168.1.28
+update=tftpboot 0x22000000 ${filename} && nand erase.spread clean ${nandaddr} 0xF800000 && nand write.trimffs ${fileaddr} ${nandaddr} ${filesize}
+update1=tftpboot 0x22000000 ${filename} && nand erase ${nandaddr} ${erasesize} && nand write ${fileaddr} ${nandaddr} ${filesize}
+update2=tftpboot 0x21000000 ${filename} && nand erase ${nandaddr} ${erasesize} && nand write ${fileaddr} ${nandaddr} ${filesize}
+updatedt=nandaddr=0x00180000 && erasesize=0x80000 && filename=acme-acqua.dtb && run update2
+updatefs=nandaddr=0x00800000 && erasesize=0x600000 && filename=rootfs.ubi && run update
+updatekrnl=nandaddr=0x00200000 && erasesize=0x600000 && filename=zImage && run update1
+```
