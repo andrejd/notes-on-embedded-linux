@@ -73,23 +73,17 @@ CONFIG_SYS_EXTRA_OPTIONS="SAMA5D3,SYS_USE_NANDFLASH"
 CONFIG_NET=y
 ```
 
-### U-Boot and watchdog
+### U-Boot customization
 
-U-Boot has in source tree support for watchdogs (`drivers/watchdog/`) where are located drivers for different platforms. Atmel IC's related driver is found in file `at91sam9_wdt.c`.
-Watchdog is not enabled by default, you need to modify configuration header file for your board located in `include/configs/` directory of U-Boot source tree.
-
-To enable watchdog for Acme Acqua SoM, one has to modify file `acqua.h` file in `include/configs` directory by adding two defines and recompile source tree to get new binaries:
-```c
-#define CONFIG_HW_WATCHDOG
-#define CONFIG_AT91SAM9_WATCHDOG
+To customize U-Boot, e.g to change autoboot text, enable watchdog, set password to enter into U-Boot console etc., you need to define additional macros in board file, e.g. `acqua.h` for Acmesystems Acqua board in `include/configs` folder, see the [documentation](https://github.com/u-boot/u-boot/blob/master/doc/README.autoboot):
 ```
+#define CONFIG_RESET_TO_RETRY
+#define CONFIG_BOOT_RETRY_TIME 60 // this option does not work if using keyed option below
 
-> If watchdog has already been configured before, e.g. in AT91Bootstrap, you also need to modify `at91sam9_wdt.c` file by commenting out
-> watchdog initialization code, as for security reasons watchdog on Atmel IC's can be configured only once.
-
-> With Watchdog enabled and SPL option checked in U-Boot configuration compilation of SPL bootloader will fail.  As we do not need SPL, we can disable it in U-Boot settings.
-
->*"The point with an SPL is to create a very small preloader, which loads the 'full' U-Boot image. It’s built from U-Boot’s sources, but with a minimal set of code. So when U-Boot is built for a platform that requires SPL, it’s typically done twice: Once for generating the SPL, and a second time for the full U-Boot. The SPL build is done with the CONFIG\_SPL defined. Only the pre-location phase runs on SPL builds. All it does is the minimal set of initializations, then loads the full U-Boot image, and passes control to it."*
+#define CONFIG_AUTOBOOT_KEYED
+#define CONFIG_AUTOBOOT_STOP_STR "<your password>"
+#define CONFIG_AUTOBOOT_PROMPT "\nType password to cancel autoboot, you have %d seconds:\n", bootdelay
+```
 
 ### Flashing linux images with U-Boot
 
