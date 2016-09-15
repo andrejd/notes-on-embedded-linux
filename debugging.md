@@ -49,7 +49,8 @@ Decompress the downloaded archive in your file browser and navigate to the resul
 Open terminal and paste below command and run:
 ```bash
 gedit ~/.local/share/applications/eclipse.desktop
-#The command creates and opens a launcher file, for current user, with gedit text editor. Paste into it below content:
+# The command creates and opens a launcher file, for current user, with gedit text editor.
+# Paste into it content below:
 
 # depends on your eclipse installation folder, change corresponding paths below.
 [Desktop Entry]
